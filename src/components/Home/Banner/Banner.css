@@ -1,0 +1,33 @@
+#top-banner {
+    background: url("../../../images/bannerbackground.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 75vh;
+}
+#search-container {
+    width: 500px;
+    margin: auto;
+    display:flex;
+    flex-direction:row;
+    
+    padding:2px;
+}
+
+#search-container input {
+    flex-grow:2;
+    border:none;
+}
+
+#search-container input:focus {
+    /* removing the input focus blue box. Put this on the form if you like. */
+    outline: none;
+  }
+
+#search-container button {
+    /* Just a little styling to make it pretty */
+    border:1px solid blue;
+    background:blue;
+    color:white;
+  }
+
