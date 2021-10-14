@@ -6,17 +6,24 @@
     height: 75vh;
 }
 #search-container {
-    width: 500px;
-    margin: auto;
     display:flex;
     flex-direction:row;
-    
-    padding:2px;
+  /* This bit draws the box around it */
+    /* border:1px solid grey; */
+  /* I've used padding so you can see the edges of the elements. */
+    background: #fff;
+    border-radius: 1.5rem;
 }
 
 #search-container input {
+/* Tell the input to use all the available space */
     flex-grow:2;
+  /* And hide the input's outline, so the form looks like the outline */
     border:none;
+    min-height: calc(1.5em + 1rem + 2px);
+    padding: .5rem 1.25rem;
+    font-size: 1.25rem;
+    border-radius: 1.5rem;
 }
 
 #search-container input:focus {
@@ -26,8 +33,25 @@
 
 #search-container button {
     /* Just a little styling to make it pretty */
-    border:1px solid blue;
-    background:blue;
-    color:white;
+    color: #fff;
+    background-color: #dc3545;
+    border:1px solid #dc3545;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border-radius: 1.5rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  #search-container button:hover {
+    background-color: #bb2d3b;
   }
 
