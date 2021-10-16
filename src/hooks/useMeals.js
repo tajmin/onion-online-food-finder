@@ -4,12 +4,15 @@ const useMeals = () => {
     const [meals, setMeals] = useState();
 
     useEffect(() => {
-        fetch('./meals.json')
+        fetch('https://tajmin.github.io/onion-api/meals.json')
             .then(res => res.json())
-            .then(data => setMeals(data))
+            .then(data => {
+                console.log(data)
+                setMeals(data)
+            })
     }, [])
 
-    return [meals];
+    return [meals, setMeals];
 }
 
 export default useMeals;
