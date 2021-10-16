@@ -6,10 +6,7 @@ const useMeals = () => {
     useEffect(() => {
         fetch('https://tajmin.github.io/onion-api/meals.json')
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setMeals(data)
-            })
+            .then(data => setMeals(data))
     }, [])
 
     return [meals, setMeals];
