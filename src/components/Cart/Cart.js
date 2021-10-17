@@ -7,7 +7,7 @@ const Cart = () => {
     const [cart, setCart] = useCart(meals);
     return (
         <div>
-            <h1>This is cart {cart.map(item => item.id)}</h1>
+            <h1>This is cart {cart.map(item => item.quantity)}</h1>
         </div>
     );
 };
