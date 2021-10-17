@@ -9,17 +9,14 @@ const Meals = () => {
     const [key, setKey] = useState('lunch');
 
     const handleFilterMeals = (cat) => {
-        const newMeals = meals.filter(meal => meal.category === cat)
+        const newMeals = meals?.filter(meal => meal.category === cat)
         setFilteredMeals(newMeals);
         setKey(cat);
     }
 
     useEffect(() => {
-        console.log(key);
         const newMeals = meals?.filter(meal => meal.category === key)
         setFilteredMeals(newMeals);
-        console.log(newMeals, "---");
-
     }, [])
 
     return (

@@ -5,18 +5,57 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import './MealDetails.css'
 import { Button } from 'react-bootstrap';
+import useCart from '../../hooks/useCart';
+import { addToLocalCart } from '../../utils/localStorage';
 
 const MealDetails = () => {
     const { mealID } = useParams();
     const [meals, setMeals] = useMeals();
     const [detailedMeal, setDetailedMeal] = useState();
+    const [cart, setCart] = useCart(meals);
     const [quantity, setQuantity] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(true)
 
     useEffect(() => {
         const mealInfo = meals?.find(ml => ml.id.toString() === mealID);
         setDetailedMeal(mealInfo);
     }, [meals])
 
+    const handleQuantity = (param) => {
+        if (param) {
+            const newQuantity = quantity + 1;
+            setQuantity(newQuantity);
+        } else if (quantity > 0) {
+            const newQuantity = quantity - 1;
+            setQuantity(newQuantity);
+        }
+    }
+
+    useEffect(() => {
+        if (quantity > 0) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    }, [quantity])
+
+    const handleAddToCart = () => {
+        const updatedMeal = { ...detailedMeal };
+        const existingMeal = cart.find(item => item.id === detailedMeal.id);
+        let updatedCart = [];
+        if (existingMeal) {
+            const restMeals = cart.filter(item => item.id !== detailedMeal.id);
+            existingMeal.quantity += quantity;
+            updatedCart = [...restMeals, existingMeal]
+        }
+        else {
+
+            updatedMeal.quantity = quantity;
+            updatedCart = [...cart, updatedMeal]
+        }
+        setCart(updatedCart);
+        addToLocalCart(updatedMeal);
+    }
 
     return (
         <div className="container py-5">
@@ -32,13 +71,13 @@ const MealDetails = () => {
                     <div className="d-flex align-items-center mt-2">
                         <div><h1>${detailedMeal?.price}</h1></div>
                         <div className="border border-2 d-flex ms-4 p-1 px-1 rounded-pill">
-                            <button className="btn-custom bg-white border-0 ms-2 pe-3"><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>  </button>
-                            <h3 className="fw-normal text-secondary">10</h3>
-                            <button className="btn-custom bg-white border-0 me-2 ps-3"><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></button>
+                            <button onClick={() => handleQuantity(false)} className="btn-custom bg-white border-0 ms-2 pe-3"><FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>  </button>
+                            <h3 className="fw-normal text-secondary">{quantity}</h3>
+                            <button onClick={() => handleQuantity(true)} className="btn-custom bg-white border-0 me-2 ps-3"><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></button>
                         </div>
                     </div>
                     <div className="d-flex mt-4">
-                        <Button className="btn btn-danger fs-5 fw-light px-4 py-2 rounded-pill"><FontAwesomeIcon icon={faShoppingCart} className="me-2"></FontAwesomeIcon> Add</Button>
+                        <Button className="btn btn-danger fs-5 fw-light px-4 py-2 rounded-pill" onClick={handleAddToCart} disabled={isDisabled}><FontAwesomeIcon icon={faShoppingCart} className="me-2"></FontAwesomeIcon> Add</Button>
                     </div>
                 </div>
             </div>
